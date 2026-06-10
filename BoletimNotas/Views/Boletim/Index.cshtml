@@ -1,0 +1,43 @@
+@using BoletimNotas.Models
+@{
+    ViewData["Title"] = ViewBag.Titulo ?? "Boletim";
+    var boletim = ViewBag.Boletim as List<BoletimItem>;
+    decimal media = 0;
+    if (boletim != null && boletim.Count > 0)
+    {
+        foreach (var b in boletim) media += b.Nota;
+        media /= boletim.Count;
+    }
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (boletim == null || boletim.Count == 0)
+{
+    <p>Nenhuma nota disponível.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Matéria</th>
+                <th>Nota</th>
+                <th>Professor</th>
+                <th>Observação</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in boletim)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Materia</td>
+                    <td>@item.Nota.ToString(F1")</td>
+                    <td>@item.Professor</td>
+                    <td>@item.Observacao</td>
+                </tr>
+            }
+        </tbody>
+    </table>
