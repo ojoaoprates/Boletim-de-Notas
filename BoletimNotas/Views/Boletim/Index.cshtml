@@ -1,16 +1,16 @@
 @using BoletimNotas.Models
 @{
-    ViewData["Title"] = ViewBag.Titulo ?? "Boletim";
-    var boletim = ViewBag.Boletim as List<BoletimItem>;
+    ViewData[index: "Title"] = ViewBag.Titulo ?? "Boletim";
+    List<BoletimItem>? boletim = ViewBag.Boletim as List<BoletimItem>;
     decimal media = 0;
     if (boletim != null && boletim.Count > 0)
     {
-        foreach (var b in boletim) media += b.Nota;
+        foreach (BoletimItem b in boletim) media += b.Nota;
         media /= boletim.Count;
     }
 }
 
-<h2>@ViewData["Title"]</h2>
+<h2>@ViewData[index: "Title"]</h2>
 
 @if (boletim == null || boletim.Count == 0)
 {
@@ -29,15 +29,16 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in boletim)
+            @foreach (BoletimItem item in boletim)
             {
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Materia</td>
-                    <td>@item.Nota.ToString(F1")</td>
+                    <td>@item.Nota.ToString(format: "F1")</td>
                     <td>@item.Professor</td>
                     <td>@item.Observacao</td>
                 </tr>
             }
         </tbody>
     </table>
+    }
